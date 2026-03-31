@@ -29,7 +29,30 @@
     <div id="homeos-dashboard" class="room-grid">
 
     </div>
-    <button class="floating-add-btn" title="Add Room">+</button>
+    <button class="floating-add-btn" id="open-popup-btn" title="Add Room">+</button>
+    <div id="add-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="margin: 0;">Initialize Sector</h3>
+                <button class="close-btn" id="close-popup-btn">×</button>
+            </div>
+
+            <div class="form-group">
+                <label>Sector Name</label>
+                <input type="text" id="popup-room-name" class="form-control" placeholder="Enter room name...">
+            </div>
+            <div class="form-group">
+                <label>Elevation Level</label>
+                <select id="popup-room-level" class="form-control">
+                    <option value="Main Level">Main Level</option>
+                    <option value="Lower Level">Lower Level</option>
+                    <option value="Upper Level">Upper Level</option>
+                    <option value="Exterior">Exterior</option>
+                </select>
+            </div>
+            <button class="submit-btn" onclick="buildPopupRoom()">Add Sector</button>
+        </div>
+    </div>
     <script src="Scripts/main.js"></script>
 </body>
 </html>
