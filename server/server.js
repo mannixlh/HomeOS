@@ -1,13 +1,27 @@
+const cors = require('cors');
+app.use(cors());
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const roomSchema = new mongoose.Schema({
+  name: String,
+  level: String,
+  assets: Array
+});
+
+const Room = mongoose.model('Room', roomSchema);
+
+app.post('/api/rooms', async (req, res) => {
+  const newRoom = new Room(req.body);
+  await newRoom.save();
+  res.json(newRoom);
+});
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Replace this with your actual URI from the .env file
 const uri = process.env.MONGO_URI;
 
 mongoose.connect(uri)
