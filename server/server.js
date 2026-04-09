@@ -16,7 +16,6 @@ app.post('/api/rooms', async (req, res) => {
   await newRoom.save();
   res.json(newRoom);
 });
-const cors = require('cors');
 
 const app = express();
 app.use(cors());
