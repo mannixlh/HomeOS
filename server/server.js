@@ -1,13 +1,16 @@
 const cors = require('cors');
-app.use(cors());
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const roomSchema = new mongoose.Schema({
   name: String,
   level: String,
   assets: Array
 });
+
+const app = express();
+app.use(cors());
+app.use(express.json());
 
 const Room = mongoose.model('Room', roomSchema);
 
@@ -16,10 +19,6 @@ app.post('/api/rooms', async (req, res) => {
   await newRoom.save();
   res.json(newRoom);
 });
-
-const app = express();
-app.use(cors());
-app.use(express.json());
 
 const uri = process.env.MONGO_URI;
 
