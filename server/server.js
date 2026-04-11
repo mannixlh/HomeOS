@@ -5,7 +5,7 @@ require('dotenv').config();
 const roomSchema = new mongoose.Schema({
   name: String,
   level: String,
-  assets: Array
+  devices: Array
 });
 
 const app = express();
@@ -14,11 +14,6 @@ app.use(express.json());
 
 const Room = mongoose.model('Room', roomSchema);
 
-app.post('/api/rooms', async (req, res) => {
-  const newRoom = new Room(req.body);
-  await newRoom.save();
-  res.json(newRoom);
-});
 
 const uri = process.env.MONGO_URI;
 

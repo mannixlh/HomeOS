@@ -17,8 +17,11 @@ function App() {
     };
     fetchRooms(); 
   }, []);
-  const handleSaveRoom = async () => {
+  const handleSaveRoom = async (e) => {
+    if (e) e.preventDefault();
+
     if (!newRoomName) return;
+
       try {
         const response = await axios.post('http://localhost:5000/api/rooms', {
           name: newRoomName,
@@ -83,7 +86,10 @@ function App() {
             />
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button onClick={handleSaveRoom} style={{ backgroundColor: '#1877f2', color: 'white', padding: '5px 15px', border: 'none', borderRadius: '5px' }}>
+              <button 
+              type="button"
+              onClick={handleSaveRoom}
+              style={{ backgroundColor: '#1877f2', color: 'white', padding: '5px 15px', border: 'none', borderRadius: '5px' }}>
                 Save
               </button>
             </div>
