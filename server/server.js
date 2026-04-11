@@ -30,6 +30,16 @@ app.get('/', (req, res) => {
   res.send("HouseOS Server is Running");
 });
 
+app.post('/api/rooms', async (req, res) => {
+  try {
+    const newRoom = new Room(req.body);
+    const savedRoom = await newRoom.save();
+    res.status(201).json(savedRoom);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server is flying on port ${PORT}`);
