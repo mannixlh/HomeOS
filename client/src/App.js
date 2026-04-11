@@ -60,21 +60,14 @@ function App() {
         {rooms.map((room, i) => (
           <div key={room._id || i} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
             <h2 style={{ margin: '0 0 10px 0' }}>{room.name}</h2>
-            {/* Fix 3: Changed room.items to room.devices to match your DB Schema */}
             <ul style={{ paddingLeft: '20px' }}>
               {room.devices && room.devices.map((device, j) => <li key={j}>{device}</li>)}
             </ul>
+            <button onClick={() => handleAddDevice(room._id)} style={{ marginTop: '10px', padding: '5px 10px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+              + Add Device
+            </button>
           </div>
         ))}
-      </div>
-      <div key={room._id} className="room-card">
-        <h2>{room.name}</h2>
-        <ul>
-          {room.devices.map((device, j) => <li key={j}>{device}</li>)}
-        </ul>
-        <button onClick={() => handleAddDevice(room._id)} style={{ marginTop: '10px', padding: '5px 10px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px' }}>
-          + Add Device
-        </button>
       </div>
 
       {showModal && (
@@ -82,7 +75,6 @@ function App() {
           <div style={{ background: 'white', padding: '30px', borderRadius: '10px', width: '300px' }}>
             <h2>Add Room</h2>
             <p>Room Name:</p>
-            {/* Fix: Linked input to the state */}
             <input 
               type="text" 
               value={newRoomName}
