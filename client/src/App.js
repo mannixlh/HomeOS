@@ -1,11 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [rooms, setRooms] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [rooms] = useState([
-    { name: "Garage", level: "Lower", items: ["2014 Jeep Cherokee", "2018 Hyundai Tucson"] },
-    { name: "Kitchen", level: "Main", items: ["Kenmore Elite Fridge"] }
-  ]);
+  const [newRoomName, setNewRoomName] = useState("");
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/rooms');
+        setRooms(res.data);
+      } catch (err) {
+        console.error("Error fetching rooms:", err);
+      }
+    };
+    fetchRooms(); 
+  }, []);
+  const handleSaveRoom = async () => {
+    if (!newRoomName) return;
+      try {
+        const response = await axios.post('http://localhost:5000/api/rooms', {
+          name: newRoomName,
+          devices: [] //default empty devices list
+        });
+        setRooms([...rooms, response.data]);
+        setNewRoomName("");
+        setShowModal(false);
+      } catch (err) {
+        console.error("Error adding room:", err);
+      }
+    };
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
@@ -18,25 +43,33 @@ function App() {
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {rooms.map((room, i) => (
-          <div key={i} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+          <div key={room._id || i} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
             <h2 style={{ margin: '0 0 10px 0' }}>{room.name}</h2>
-            <p style={{ color: '#65676b', fontSize: '14px' }}>{room.level} Level</p>
+            {/* Fix 3: Changed room.items to room.devices to match your DB Schema */}
             <ul style={{ paddingLeft: '20px' }}>
-              {room.items.map((item, j) => <li key={j}>{item}</li>)}
+              {room.devices && room.devices.map((device, j) => <li key={j}>{device}</li>)}
             </ul>
           </div>
         ))}
       </div>
 
       {showModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
           <div style={{ background: 'white', padding: '30px', borderRadius: '10px', width: '300px' }}>
             <h2>Add Room</h2>
             <p>Room Name:</p>
-            <input type="text" style={{ width: '100%', marginBottom: '10px' }} />
+            {/* Fix: Linked input to the state */}
+            <input 
+              type="text" 
+              value={newRoomName}
+              onChange={(e) => setNewRoomName(e.target.value)}
+              style={{ width: '100%', marginBottom: '10px', padding: '8px', boxSizing: 'border-box' }} 
+            />
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button style={{ backgroundColor: '#1877f2', color: 'white' }}>Save</button>
+              <button onClick={handleSaveRoom} style={{ backgroundColor: '#1877f2', color: 'white', padding: '5px 15px', border: 'none', borderRadius: '5px' }}>
+                Save
+              </button>
             </div>
           </div>
         </div>
