@@ -21,6 +21,16 @@ mongoose.connect(uri)
   .then(() => console.log("✅ HouseOS Database Connected!"))
   .catch(err => console.error("❌ Connection error:", err));
 
+app.delete('/api/rooms/clear', async (req, res) => {
+  try {
+    const result = await Room.deleteMany({});
+    console.log("Wiped Database:", result);
+    res.status(200).json({ message: "Database cleared" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/rooms', async (req, res) => {
   try {
     const newRoom = new Room(req.body);
@@ -53,7 +63,6 @@ app.get('/api/rooms', async (req, res) => {
 app.get('/', (req, res) => {
   res.send("HouseOS Server is Running");
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
