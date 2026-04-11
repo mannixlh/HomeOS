@@ -31,6 +31,21 @@ function App() {
         console.error("Error adding room:", err);
       }
     };
+    const handleAddDevice = async (roomId) => {
+      const deviceName = prompt("Enter device name:");
+      if (!deviceName) return;
+      
+      try {
+        const response = await axios.put(`http://localhost:5000/api/rooms/${roomId}/add-device`, {
+          device: deviceName
+        });
+        
+        setRooms(rooms.map(room => room._id === roomId ? response.data : room));
+      } catch (err) {
+        console.error("Error adding device:", err);
+
+      }
+    };
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
@@ -51,6 +66,15 @@ function App() {
             </ul>
           </div>
         ))}
+      </div>
+      <div key={room._id} className="room-card">
+        <h2>{room.name}</h2>
+        <ul>
+          {room.devices.map((device, j) => <li key={j}>{device}</li>)}
+        </ul>
+        <button onClick={() => handleAddDevice(room._id)} style={{ marginTop: '10px', padding: '5px 10px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px' }}>
+          + Add Device
+        </button>
       </div>
 
       {showModal && (
