@@ -35,25 +35,25 @@ function App() {
     }
   };
   const handleSaveRoom = async (e) => {
-  if (e) e.preventDefault();
-  if (!newRoomName) return;
+    if (e) e.preventDefault();
+    if (!newRoomName) return;
 
-  try {
-    const response = await axios.post('http://localhost:5000/api/rooms', {
-      name: newRoomName,
-      paintBrand: paintBrand,
-      paintColor: paintColor,
-      devices: []
-    });
-    setRooms([...rooms, response.data]);
-    setNewRoomName("");
-    setPaintBrand(""); 
-    setPaintColor(""); 
-    setShowModal(false);
-  } catch (err) {
-    console.error("Error adding room:", err);
-  }
-};
+    try {
+      const response = await axios.post('http://localhost:5000/api/rooms', {
+        name: newRoomName,
+        paintBrand: paintBrand,
+        paintColor: paintColor,
+        devices: []
+      });
+      setRooms([...rooms, response.data]);
+      setNewRoomName("");
+      setPaintBrand("");
+      setPaintColor("");
+      setShowModal(false);
+    } catch (err) {
+      console.error("Error adding room:", err);
+    }
+  };
 
   const clearDatabase = async () => {
     if (window.confirm("Are you sure you want to wipe the entire database?")) {
@@ -69,7 +69,7 @@ function App() {
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <h1>HouseOS Dashboard</h1>
+        <h1>HomeOS Dashboard</h1>
         <button onClick={() => setShowModal(true)} style={{ padding: '10px 20px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
           + Add Room
         </button>
@@ -79,6 +79,9 @@ function App() {
         {rooms.map((room, i) => (
           <div key={room._id || i} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
             <h2 style={{ margin: '0 0 10px 0' }}>{room.name}</h2>
+            <p style={{ fontSize: '12px', color: '#666', margin: '0 0 10px 0' }}>
+              {room.paintBrand} - {room.paintColor}
+            </p>
             <ul style={{ paddingLeft: '20px' }}>
               {room.devices && room.devices.map((device, j) => <li key={j}>{device}</li>)}
             </ul>
