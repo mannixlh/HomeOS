@@ -16,8 +16,7 @@ const roomSchema = new mongoose.Schema({
   level: String,
   paintBrand: String,
   paintColor: String,
-  lastServiced: {type: Date, default: Date.now},
-  devices: [{name: String, status: {type: String, default: 'off'}}]
+  devices: [{name: String, status: {type: String, default: 'off'}, lastServiced: {type: Date, default: Date.now}}]
 });
 
 const Room = mongoose.model('Room', roomSchema);
