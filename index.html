@@ -67,6 +67,17 @@
                 } catch (err) { console.error(err); }
             };
 
+            const handleDeleteRoom = async (roomId) => {
+                if (!window.confirm("Are you sure you want to delete this room?")) return;
+
+                try {
+                    await axios.delete(`https://homeos-s4zu.onrender.com/api/rooms/${roomId}`);
+                    setRooms(rooms.filter(room => room._id !== roomId));
+                } catch (err) {
+                    console.error("Error deleting room:", err);
+                }
+            };
+
             return (
                 <div className="p-8 max-w-6xl mx-auto">
                     <header className="flex justify-between items-center mb-8">
