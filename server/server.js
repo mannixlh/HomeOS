@@ -58,7 +58,7 @@ app.put('/api/rooms/:id/add-device', async (req, res) => {
     const { device } = req.body;
     const updatedRoom = await Room.findByIdAndUpdate(
       req.params.id,
-      { $push: { devices: device } },
+      { $push: { devices: { name: device } } },
       { new: true }
     );
     res.json(updatedRoom);
