@@ -70,8 +70,9 @@ app.put('/api/rooms/:id/add-device', async (req, res) => {
 //Add service to device
 app.put('/api/rooms/:roomId/devices/:deviceIndex/service', async (req, res) => {
   try {
+    const { lastServiced } = req.body;
     const room = await Room.findById(req.params.roomId);
-    room.devices[req.params.deviceIndex].lastServiced = Date.now();
+    room.devices[req.params.deviceIndex].lastServiced = lastServiced;
     await room.save();
     res.json(room);
   } catch (err) {
