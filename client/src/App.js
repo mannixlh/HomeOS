@@ -49,6 +49,34 @@ function App() {
 
       }
     };
+    async function saveRoomData() {
+      const roomData = {
+        roomName: document.getElementById('roomName').value,
+        specs: {
+          paintBrand: document.getElementById('paintBrand').value,
+          paintColor: document.getElementById('paintColor').value
+        }
+    };
+    
+    try {
+      const response = await axios.post('/api/rooms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(roomData)
+      });
+      
+      if (response.ok) {
+        alert("Room specs saved successfully!");
+        document.getElementById('roomName').value = '';
+      } else {
+        console.error("Failed to save room specs.");
+      }
+    } catch (error) {
+      console.error("Error saving room specs:", error);
+    }
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', saveRoomData);
     const clearDatabase = async () => {
   if (window.confirm("Are you sure you want to wipe the entire database?")) {
     try {
