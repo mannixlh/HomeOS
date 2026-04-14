@@ -26,7 +26,7 @@ mongoose.connect(uri)
   .then(() => console.log("✅ HomeOS Database Connected!"))
   .catch(err => console.error("❌ Connection error:", err));
 
-//Clear Database
+//Delete Room
 app.delete('/api/rooms/:id', async (req, res) => {
   try {
     await Room.findByIdAndDelete(req.params.id);

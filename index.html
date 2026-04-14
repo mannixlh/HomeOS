@@ -36,8 +36,7 @@
                 } catch (err) { console.error(err); }
             };
 
-            const handleAddDevice = async (roomId) => {
-                const deviceName = prompt("Enter device name:");
+            const handleAddDevice = async (roomId, deviceName) => {
                 if (!deviceName) return;
 
                 try {
@@ -118,14 +117,41 @@
                                             <li key={index}>{device}</li>
                                         ))}
                                     </ul>
+                                    <div className="device-input-container" style={{ marginTop: '15px', display: 'flex', gap: '5px' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Add device (e.g. Lamp)"
+                                            id={`input-${room._id}`} // Unique ID so we know which room we are typing in
+                                            style={{
+                                                flex: 1,
+                                                padding: '3px',
+                                                fontSize: '12px',
+                                                borderRadius: '4px',
+                                                border: '1px solid #ccc'
+                                            }}
+                                        />
+                                        <button
+                                            onClick={() => {
+                                                const input = document.getElementById(`input-${room._id}`);
+                                                if (input.value) {
+                                                    handleAddDevice(room._id, input.value);
+                                                    input.value = ''; // Clear the box after adding
+                                                }
+                                            }}
+                                            style={{
+                                                padding: '3px 8px',
+                                                fontSize: '12px',
+                                                backgroundColor: '#007bff',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <button
-                                    onClick={() => handleAddDevice(room._id)}
-                                    style={{ marginTop: '10px', padding: '5px 10px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-                                >
-                                    + Add Device
-                                </button>
                             </div>
                         ))}
                     </div>
@@ -150,7 +176,7 @@
                             </div>
                         </div>
                     )}
-                    </div>
+                </div>
             );
         }
 
