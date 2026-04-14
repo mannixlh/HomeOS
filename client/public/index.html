@@ -31,7 +31,7 @@
 
             const fetchRooms = async () => {
                 try {
-                    const res = await axios.get('http://localhost:5000/api/rooms');
+                    const res = await axios.get('https://homeos-s4zu.onrender.com/api/rooms');
                     setRooms(res.data);
                 } catch (err) { console.error(err); }
             };
@@ -41,7 +41,7 @@
                 if (!deviceName) return;
 
                 try {
-                    const response = await axios.put(`http://localhost:5000/api/rooms/${roomId}/add-device`, {
+                    const response = await axios.put(`https://homeos-s4zu.onrender.com/api/rooms/${roomId}/add-device`, {
                         device: deviceName
                     });
 
@@ -55,7 +55,7 @@
             const handleSaveRoom = async () => {
                 if (!newRoomName) return;
                 try {
-                    const res = await axios.post('http://localhost:5000/api/rooms', {
+                    const res = await axios.post('https://homeos-s4zu.onrender.com/api/rooms', {
                         name: newRoomName,
                         paintBrand: paintBrand,
                         paintColor: paintColor,
