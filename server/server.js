@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
+const { type } = require('os');
 const path = require('path');
 require('dotenv').config();
 
@@ -15,7 +16,8 @@ const roomSchema = new mongoose.Schema({
   level: String,
   paintBrand: String,
   paintColor: String,
-  devices: Array
+  lastServiced: {type: Date, default: Date.now},
+  devices: [{name: String, status: {type: String, default: 'off'}}]
 });
 
 const Room = mongoose.model('Room', roomSchema);
