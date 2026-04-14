@@ -89,7 +89,7 @@
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {rooms.map((room) => (
-                            <div key={room._id} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+                            <div key={room._id} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', position: 'relative' }}>
                                 <h2 style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>{room.name}</h2>
                                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 10px 0' }}>
                                     {room.paintBrand} - {room.paintColor}
