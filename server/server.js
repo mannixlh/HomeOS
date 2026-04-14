@@ -8,7 +8,9 @@ const roomSchema = new mongoose.Schema({
   devices: Array
 });
 
+const path = require('path');
 const app = express();
+app.use(express.static(path.join(__dirname, '../client')));
 app.use(cors());
 app.use(express.json());
 
