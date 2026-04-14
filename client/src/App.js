@@ -5,6 +5,8 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [newRoomName, setNewRoomName] = useState("");
+  const [paintBrand, setPaintBrand] = useState("");
+  const [paintColor, setPaintColor] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -15,78 +17,54 @@ function App() {
         console.error("Error fetching rooms:", err);
       }
     };
-    fetchRooms(); 
+    fetchRooms();
   }, []);
-  const handleSaveRoom = async (e) => {
-    if (e) e.preventDefault();
+  const handleAddDevice = async (roomId) => {
+    const deviceName = prompt("Enter device name:");
+    if (!deviceName) return;
 
-    if (!newRoomName) return;
-
-      try {
-        const response = await axios.post('http://localhost:5000/api/rooms', {
-          name: newRoomName,
-          devices: [] //default empty devices list
-        });
-        setRooms([...rooms, response.data]);
-        setNewRoomName("");
-        setShowModal(false);
-      } catch (err) {
-        console.error("Error adding room:", err);
-      }
-    };
-    const handleAddDevice = async (roomId) => {
-      const deviceName = prompt("Enter device name:");
-      if (!deviceName) return;
-      
-      try {
-        const response = await axios.put(`http://localhost:5000/api/rooms/${roomId}/add-device`, {
-          device: deviceName
-        });
-        
-        setRooms(rooms.map(room => room._id === roomId ? response.data : room));
-      } catch (err) {
-        console.error("Error adding device:", err);
-
-      }
-    };
-    async function saveRoomData() {
-      const roomData = {
-        roomName: document.getElementById('roomName').value,
-        specs: {
-          paintBrand: document.getElementById('paintBrand').value,
-          paintColor: document.getElementById('paintColor').value
-        }
-    };
-    
     try {
-      const response = await axios.post('/api/rooms', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(roomData)
+      const response = await axios.put(`http://localhost:5000/api/rooms/${roomId}/add-device`, {
+        device: deviceName
       });
-      
-      if (response.ok) {
-        alert("Room specs saved successfully!");
-        document.getElementById('roomName').value = '';
-      } else {
-        console.error("Failed to save room specs.");
-      }
-    } catch (error) {
-      console.error("Error saving room specs:", error);
-    }
-  }
 
-  document.getElementById('saveBtn').addEventListener('click', saveRoomData);
-    const clearDatabase = async () => {
-  if (window.confirm("Are you sure you want to wipe the entire database?")) {
-    try {
-      await axios.delete('http://localhost:5000/api/rooms/clear');
-      setRooms([]);
+      setRooms(rooms.map(room => room._id === roomId ? response.data : room));
     } catch (err) {
-      console.error("Error clearing database:", err);
+      console.error("Error adding device:", err);
+
     }
+  };
+  const handleSaveRoom = async (e) => {
+  if (e) e.preventDefault();
+  if (!newRoomName) return;
+
+  try {
+    const response = await axios.post('http://localhost:5000/api/rooms', {
+      name: newRoomName,
+      paintBrand: paintBrand,
+      paintColor: paintColor,
+      devices: []
+    });
+    setRooms([...rooms, response.data]);
+    setNewRoomName("");
+    setPaintBrand(""); 
+    setPaintColor(""); 
+    setShowModal(false);
+  } catch (err) {
+    console.error("Error adding room:", err);
   }
 };
+
+  const clearDatabase = async () => {
+    if (window.confirm("Are you sure you want to wipe the entire database?")) {
+      try {
+        await axios.delete('http://localhost:5000/api/rooms/clear');
+        setRooms([]);
+      } catch (err) {
+        console.error("Error clearing database:", err);
+      }
+    }
+  };
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
@@ -116,18 +94,32 @@ function App() {
           <div style={{ background: 'white', padding: '30px', borderRadius: '10px', width: '300px' }}>
             <h2>Add Room</h2>
             <p>Room Name:</p>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newRoomName}
               onChange={(e) => setNewRoomName(e.target.value)}
-              style={{ width: '100%', marginBottom: '10px', padding: '8px', boxSizing: 'border-box' }} 
+              style={{ width: '100%', marginBottom: '10px', padding: '8px', boxSizing: 'border-box' }}
+            />
+            <p>Paint Brand:</p>
+            <input
+              type="text"
+              value={paintBrand}
+              onChange={(e) => setPaintBrand(e.target.value)}
+              style={{ width: '100%', marginBottom: '10px', padding: '8px', boxSizing: 'border-box' }}
+            />
+            <p>Paint Color:</p>
+            <input
+              type="text"
+              value={paintColor}
+              onChange={(e) => setPaintColor(e.target.value)}
+              style={{ width: '100%', marginBottom: '20px', padding: '8px', boxSizing: 'border-box' }}
             />
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button 
-              type="button"
-              onClick={handleSaveRoom}
-              style={{ backgroundColor: '#1877f2', color: 'white', padding: '5px 15px', border: 'none', borderRadius: '5px' }}>
+              <button
+                type="button"
+                onClick={handleSaveRoom}
+                style={{ backgroundColor: '#1877f2', color: 'white', padding: '5px 15px', border: 'none', borderRadius: '5px' }}>
                 Save
               </button>
             </div>
@@ -135,19 +127,19 @@ function App() {
         </div>
       )}
       <footer style={{ marginTop: '50px', textAlign: 'center' }}>
-  <button 
-    onClick={clearDatabase} 
-    style={{ 
-      background: 'none', 
-      border: 'none', 
-      color: '#ccc',
-      fontSize: '10px', 
-      cursor: 'pointer' 
-    }}
-  >
-    .
-  </button>
-</footer>
+        <button
+          onClick={clearDatabase}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#ccc',
+            fontSize: '10px',
+            cursor: 'pointer'
+          }}
+        >
+          .
+        </button>
+      </footer>
     </div>
   );
 }
