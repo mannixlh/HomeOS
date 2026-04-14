@@ -37,7 +37,7 @@
             };
 
             const handleAddDevice = async (roomId) => {
-                const [deviceName, setDeviceName] = useState('');
+                const deviceName = prompt("Enter device name:");
                 if (!deviceName) return;
 
                 try {
