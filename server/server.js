@@ -27,11 +27,10 @@ mongoose.connect(uri)
   .catch(err => console.error("❌ Connection error:", err));
 
 //Clear Database
-app.delete('/api/rooms/clear', async (req, res) => {
+app.delete('/api/rooms/:id', async (req, res) => {
   try {
-    const result = await Room.deleteMany({});
-    console.log("Wiped Database:", result);
-    res.status(200).json({ message: "Database cleared" });
+    await Room.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Room deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
