@@ -19,21 +19,7 @@ function App() {
     };
     fetchRooms();
   }, []);
-  const handleAddDevice = async (roomId) => {
-    const deviceName = prompt("Enter device name:");
-    if (!deviceName) return;
-
-    try {
-      const response = await axios.put(`http://localhost:5000/api/rooms/${roomId}/add-device`, {
-        device: deviceName
-      });
-
-      setRooms(rooms.map(room => room._id === roomId ? response.data : room));
-    } catch (err) {
-      console.error("Error adding device:", err);
-
-    }
-  };
+  
   const handleSaveRoom = async (e) => {
     if (e) e.preventDefault();
     if (!newRoomName) return;
@@ -74,23 +60,6 @@ function App() {
           + Add Room
         </button>
       </header>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-        {rooms.map((room, i) => (
-          <div key={room._id || i} style={{ background: 'white', padding: '20px', borderRadius: '10px', width: '250px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
-            <h2 style={{ margin: '0 0 10px 0' }}>{room.name}</h2>
-            <p style={{ fontSize: '12px', color: '#666', margin: '0 0 10px 0' }}>
-              {room.paintBrand} - {room.paintColor}
-            </p>
-            <ul style={{ paddingLeft: '20px' }}>
-              {room.devices && room.devices.map((device, j) => <li key={j}>{device}</li>)}
-            </ul>
-            <button onClick={() => handleAddDevice(room._id)} style={{ marginTop: '10px', padding: '5px 10px', backgroundColor: '#1877f2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-              + Add Device
-            </button>
-          </div>
-        ))}
-      </div>
 
       {showModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
