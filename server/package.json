@@ -1,19 +1,20 @@
 {
-  "name": "server",
+  "name": "homeos-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "HomeOS Backend for IST Portfolio",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mannix Lee Holman",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.1",
-    "express": "^5.2.1",
-    "mongoose": "^9.4.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
   }
 }
