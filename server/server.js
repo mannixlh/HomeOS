@@ -16,7 +16,11 @@ const roomSchema = new mongoose.Schema({
   level: String,
   paintBrand: String,
   paintColor: String,
-  devices: [{name: String, status: {type: String, default: 'off'}, lastServiced: {type: Date, default: Date.now}}]
+  devices: [{
+    name: String, 
+    status: {type: String, default: 'off'}, 
+    lastServiced: {type: Date, default: Date.now}
+  }]
 });
 
 const Room = mongoose.model('Room', roomSchema);
@@ -60,6 +64,18 @@ app.put('/api/rooms/:id/add-device', async (req, res) => {
     res.json(updatedRoom);
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+//Add service to device
+app.put('/api/rooms/:roomId/devices/:deviceIndex/service', async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.roomId);
+    room.devices[req.params.deviceIndex].lastServiced = Date.now();
+    await room.save();
+    res.json(room);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

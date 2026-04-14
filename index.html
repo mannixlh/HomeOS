@@ -36,6 +36,22 @@
                 } catch (err) { console.error(err); }
             };
 
+
+            const handleSaveRoom = async () => {
+                if (!newRoomName) return;
+                try {
+                    const res = await axios.post('https://homeos-s4zu.onrender.com/api/rooms', {
+                        name: newRoomName,
+                        paintBrand: paintBrand,
+                        paintColor: paintColor,
+                        devices: []
+                    });
+                    setRooms([...rooms, res.data]);
+                    setNewRoomName(""); setPaintBrand(""); setPaintColor("");
+                    setShowModal(false);
+                } catch (err) { console.error(err); }
+            };
+
             const handleAddDevice = async (roomId, deviceName) => {
                 if (!deviceName) return;
 
@@ -51,19 +67,13 @@
                 }
             };
 
-            const handleSaveRoom = async () => {
-                if (!newRoomName) return;
+            const handleUpdateDeviceService = async (roomId, deviceIndex) => {
                 try {
-                    const res = await axios.post('https://homeos-s4zu.onrender.com/api/rooms', {
-                        name: newRoomName,
-                        paintBrand: paintBrand,
-                        paintColor: paintColor,
-                        devices: []
-                    });
-                    setRooms([...rooms, res.data]);
-                    setNewRoomName(""); setPaintBrand(""); setPaintColor("");
-                    setShowModal(false);
-                } catch (err) { console.error(err); }
+                    const res = await axios.put(`https://homeos-s4zu.onrender.com/api/rooms/${roomId}/devices/${deviceIndex}/service`);
+                    setRooms(rooms.map(room => room._id === roomId ? res.data : room));
+                } catch (err) {
+                    console.error("Error updating device service:", err);
+                }
             };
 
             const handleDeleteRoom = async (roomId) => {
@@ -93,6 +103,7 @@
                                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 10px 0' }}>
                                     {room.paintBrand} - {room.paintColor}
                                 </p>
+                                {/*delete room button*/}
                                 <button
                                     onClick={() => handleDeleteRoom(room._id)}
                                     style={{
@@ -111,12 +122,26 @@
                                 </button>
 
                                 <div style={{ margin: '10px 0' }}>
-                                    <strong>Devices:</strong>
-                                    <ul style={{ fontSize: '14px', color: '#666', margin: '0 0 10px 0' }}>
-                                        {room.devices && room.devices.map((device, index) => (
-                                            <li key={index}>{device}</li>
+                                    <ul className="mt-2 space-y-3">
+                                    {room.devices && room.devices.map((device, index) => (
+                                        <li key={index} className="text-sm bg-gray-50 p-2 rounded border border-gray-100">
+                                            <div className="flex justify-between items-center">
+                                                <span className="font-medium text-gray-800">{device.name || device}</span>
+                                                <button 
+                                                    onClick={() => handleUpdateDeviceService(room._id, index)}
+                                                    className="text-[10px] bg-gray-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded transition"
+                                                >
+                                                    Reset Date
+                                                </button>
+                                            </div>
+                                            <div className="text-[11px] text-gray-500 mt-1">
+                                                Last Serviced: {device.lastServiced ? new Date(device.lastServiced).toLocaleDateString() : 'Never'}
+                                            </div>
+                                        </li>
                                         ))}
                                     </ul>
+
+                                    {/* Add Device Input */}
                                     <div className="device-input-container" style={{ marginTop: '15px', display: 'flex', gap: '5px' }}>
                                         <input
                                             type="text"
