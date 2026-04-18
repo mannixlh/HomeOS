@@ -10,7 +10,7 @@ The primary purpose of this prototype is to bridge the gap between physical home
 * **Room Management:** Create and delete rooms with metadata like paint brand and color names.
 * **Maintenance Logging:** A one-click "Reset Date" feature to log when a device was last serviced.
 * **Dynamic UI:** Built with React and Tailwind CSS for a responsive, modern experience.
-* **Persistent Storage:** All data is securly sotred in a cloud hosted MongoDB database.
+* **Persistent Storage:** All data is securly stored in a cloud hosted MongoDB database.
 
 ## Technology Stack
 
