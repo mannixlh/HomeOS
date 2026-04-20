@@ -34,6 +34,20 @@ Create a `.env` file in the root and add your MongoDB connections string.
 * [] **Security:** User authentication and role-based access control.
 * [] **IoT Integration:** Live API hooks for smart home integration.
 
+## Screenshots
+
+### **Main Dashboard**
+![HomeOS Dashboard Overview](./screenshots/Screenshot_2026-04-20_121103.png)
+*The centralized dashboard displaying all registered rooms, paint specifications, and device maintenance logs.*
+
+### **Room Management**
+![Adding a New Room](./screenshots/Screenshot_2026-04-20_120349.png)
+*The interface for adding a new room with custom paint brands and colors to the MongoDB database.*
+
+### **Mobile View**
+![Mobile Dashboard](./screenshots/IMG_1767.PNG)
+*Responsive design ensuring homeowners can access their logs via mobile devices.*
+
 ## Contact
 Mannix Holman
 mlh6478@psu.edu
