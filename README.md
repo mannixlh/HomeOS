@@ -13,6 +13,10 @@ The primary purpose of this prototype is to bridge the gap between physical home
 * **Persistent Storage:** All data is securly stored in a cloud hosted MongoDB database.
 
 ## Technology Stack
+* **Frontend:** React, Tailwind CSS, AXIOS
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDb Atlas (Mongoose ODM)
+* **Deployment:** Github Pages and Render
 
 ## Installation & Setup
 1. **Clone the repository**
