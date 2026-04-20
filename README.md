@@ -26,3 +26,8 @@ The primary purpose of this prototype is to bridge the gap between physical home
 Create a `.env` file in the root and add your MongoDB connections string.
 4. **Start the server:**
 `node server.js`
+
+## Roadmap
+* [] **Automated Reminders:** Push notifications when a device exceeds 6 months without service.
+* [] **Security:** User authentification and role-based access control.
+* [] **IoI Integration:** Live API hooks for smart home integration.
