@@ -79,7 +79,13 @@
             const handleSaveServiceDate = async () => {
                 if (!selectedService) return;
                 try {
-                    const lastServiced = serviceDate ? new Date(serviceDate) : Date.now();
+                    let lastServiced;
+                    if (serviceDate) {
+                        const [year, month, day] = serviceDate.split('-');
+                        lastServiced = new Date(year, month - 1, day);
+                    } else {
+                        lastServiced = Date.now();
+                    }
                     const res = await axios.put(`https://homeos-s4zu.onrender.com/api/rooms/${selectedService.roomId}/devices/${selectedService.deviceIndex}/service`, { lastServiced });
                     setRooms(rooms.map(room => room._id === selectedService.roomId ? res.data : room));
                     setShowServiceModal(false);
