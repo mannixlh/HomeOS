@@ -37,11 +37,11 @@ Create a `.env` file in the root and add your MongoDB connections string.
 ## Screenshots
 
 ### **Main Dashboard**
-![HomeOS Dashboard Overview](./screenshots/Screenshot_2026-04-20_121103.png)
+![HomeOS Dashboard Overview](./screenshots/Screenshot_2026-04-20 121103.png)
 *The centralized dashboard displaying all registered rooms, paint specifications, and device maintenance logs.*
 
 ### **Room Management**
-![Adding a New Room](./screenshots/Screenshot_2026-04-20_120349.png)
+![Adding a New Room](./screenshots/Screenshot_2026-04-20 120349.png)
 *The interface for adding a new room with custom paint brands and colors to the MongoDB database.*
 
 ### **Mobile View**
