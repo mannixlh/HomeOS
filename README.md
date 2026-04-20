@@ -1,4 +1,6 @@
 ## HomeOS Dashboard
+**Live Site:** [View HomeOS Prototype](https://mannixlh.github.io/HomeOS/)
+
 ***Please note:** 60-second wake-up time*
 
 ## Overview
@@ -10,7 +12,7 @@ The primary purpose of this prototype is to bridge the gap between physical home
 * **Room Management:** Create and delete rooms with metadata like paint brand and color names.
 * **Maintenance Logging:** A one-click "Reset Date" feature to log when a device was last serviced.
 * **Dynamic UI:** Built with React and Tailwind CSS for a responsive, modern experience.
-* **Persistent Storage:** All data is securly stored in a cloud hosted MongoDB database.
+* **Persistent Storage:** All data is securely stored in a cloud hosted MongoDB database.
 
 ## Technology Stack
 * **Frontend:** React, Tailwind CSS, AXIOS
@@ -29,5 +31,5 @@ Create a `.env` file in the root and add your MongoDB connections string.
 
 ## Roadmap
 * [] **Automated Reminders:** Push notifications when a device exceeds 6 months without service.
-* [] **Security:** User authentification and role-based access control.
-* [] **IoI Integration:** Live API hooks for smart home integration.
+* [] **Security:** User authentication and role-based access control.
+* [] **IoT Integration:** Live API hooks for smart home integration.
