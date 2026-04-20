@@ -33,3 +33,7 @@ Create a `.env` file in the root and add your MongoDB connections string.
 * [] **Automated Reminders:** Push notifications when a device exceeds 6 months without service.
 * [] **Security:** User authentication and role-based access control.
 * [] **IoT Integration:** Live API hooks for smart home integration.
+
+## Contact
+Mannix Holman
+mlh6478@psu.edu
