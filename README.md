@@ -1,6 +1,8 @@
 ## HomeOS Dashboard
 **Live Site:** [View HomeOS Prototype](https://mannixlh.github.io/HomeOS/)
 
+**Demo Video:** [Link to video](https://www.youtube.com/watch?v=sc_zqfqkGLs)
+
 ***Please note:** 60-second wake-up time*
 
 ## Overview
