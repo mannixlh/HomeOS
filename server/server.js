@@ -41,6 +41,21 @@ app.delete('/api/rooms/:id', async (req, res) => {
   }
 });
 
+app.delete('/api/rooms/:roomId/devices/:deviceIndex', async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.roomId);
+    if (!room) {
+      return res.status(404).json({ error: 'Room not found' });
+    }
+    room.devices.splice(req.params.deviceIndex, 1);
+    await room.save();
+    res.json({ message: 'Device deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 //Save Room
 app.post('/api/rooms', async (req, res) => {
   try {
