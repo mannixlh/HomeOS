@@ -107,6 +107,17 @@
                 }
             };
 
+            const handleDeleteDevice = async (roomId, deviceIndex) => {
+                if (!window.confirm("Are you sure you want to delete this device?")) return;
+
+                try {
+                    await axios.delete(`https://homeos-s4zu.onrender.com/api/rooms/${roomId}/devices/${deviceIndex}`);
+                    setRooms(rooms.map(room => room._id === roomId ? { ...room, devices: room.devices.filter((_, i) => i !== deviceIndex) } : room));
+                } catch (err) {
+                    console.error("Error deleting device:", err);
+                }
+            };
+
             return (
                 <div className="p-8 max-w-6xl mx-auto">
                     <header className="flex justify-between items-center mb-8">
@@ -143,21 +154,37 @@
 
                                 <div style={{ margin: '10px 0' }}>
                                     <ul className="mt-2 space-y-3">
-                                    {room.devices && room.devices.map((device, index) => (
-                                        <li key={index} className="text-sm bg-gray-50 p-2 rounded border border-gray-100">
-                                            <div className="flex justify-between items-center">
-                                                <span className="font-medium text-gray-800">{device.name || device}</span>
-                                                <button 
-                                                    onClick={() => handleUpdateDeviceService(room._id, index)}
-                                                    className="text-[10px] bg-gray-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded transition"
-                                                >
-                                                    Set Date
-                                                </button>
-                                            </div>
-                                            <div className="text-[11px] text-gray-500 mt-1">
-                                                Last Serviced: {device.lastServiced ? new Date(device.lastServiced).toLocaleDateString() : 'Never'}
-                                            </div>
-                                        </li>
+                                        {room.devices && room.devices.map((device, index) => (
+                                            <li key={index} className="text-sm bg-gray-50 p-2 rounded border border-gray-100" style={{ position: 'relative' }}>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="font-medium text-gray-800">{device.name || device}</span>
+                                                    <button
+                                                        onClick={() => handleDeleteDevice(room._id, index)}
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: '2px',
+                                                            left: '2px',
+                                                            backgroundColor: 'transparent',
+                                                            border: 'none',
+                                                            color: '#888',
+                                                            cursor: 'pointer',
+                                                            fontSize: '14px'
+                                                        }}
+                                                        title="Delete"
+                                                    >
+                                                        &times;
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleUpdateDeviceService(room._id, index)}
+                                                        className="text-[10px] bg-gray-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded transition"
+                                                    >
+                                                        Set Date
+                                                    </button>
+                                                </div>
+                                                <div className="text-[11px] text-gray-500 mt-1">
+                                                    Last Serviced: {device.lastServiced ? new Date(device.lastServiced).toLocaleDateString() : 'Never'}
+                                                </div>
+                                            </li>
                                         ))}
                                     </ul>
 
